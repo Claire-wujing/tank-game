@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Come on！Tank</title>
+    <style type="text/css">
+        body {
+            background-image: url(img/grassland.png);
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #mytank {
+            position: absolute;
+        }
+
+        .bullet {
+            position: absolute;
+            width: 20px;
+            height: 10px;
+            background-image: url(img/bullet.png);
+            background-size: cover;
+            /* 确保图片覆盖整个子弹元素 */
+            background-position: center;
+        }
+
+        .b1 {
+            position: absolute;
+            width: 100px;
+            height: 300px;
+            background-size: cover;
+            background-image: url(img/b1.png);
+        }
+
+        .b11 {
+            position: absolute;
+            width: 100px;
+            height: 300px;
+            background-size: cover;
+            background-image: url(img/b11.png);
+        }
+
+        .b2 {
+            position: absolute;
+            width: 100px;
+            height: 300px;
+            background-size: cover;
+            background-image: url(img/b2.png);
+        }
+
+        .b3 {
+            position: absolute;
+            width: 790px;
+            height: 100px;
+            background-size: cover;
+            background-image: url(img/b3.png);
+        }
+
+        .b4 {
+            position: absolute;
+            width: 100px;
+            height: 300px;
+            background-size: cover;
+            background-image: url(img/b4.png);
+        }
+
+        .b5 {
+            position: absolute;
+            width: 220px;
+            height: 100px;
+            background-size: cover;
+            background-image: url(img/b5.png);
+        }
+
+        .b6 {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background-size: cover;
+            background-image: url(img/b6.png);
+        }
+
+        .b7 {
+            position: absolute;
+            width: 900px;
+            height: 50px;
+            background-size: cover;
+            background-image: url(img/b7.png);
+        }
+
+        .b8 {
+            position: absolute;
+            width: 180px;
+            height: 60px;
+            background-size: cover;
+            background-image: url(img/b8.png);
+        }
+
+        .b9 {
+            position: absolute;
+            width: 55px;
+            height: 125px;
+            background-size: cover;
+            background-image: url(img/b9.png);
+        }
+
+        .b91 {
+            position: absolute;
+            width: 55px;
+            height: 125px;
+            background-size: cover;
+            background-image: url(img/b91.png);
+        }
+
+        .g2 {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-size: cover;
+            background-image: url(img/g2.gif);
+        }
+
+        .play{
+            position: absolute;
+            width: 150px;
+            height: 40px;
+            background-size: cover;
+            background-image: url(img/play.png);
+        }
+        /* 弹窗样式 */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(248, 238, 238, 0.9);
+            padding: 50px 50px;
+            border: 5px solid #f8a3a3;
+            border-radius: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        #popup button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: rgba(186, 245, 238, 0.63);
+            cursor: pointer;
+            border: 3px solid #f8a3a3;
+            border-radius: 10px;
+        }
+
+        /* 胜利弹窗样式 */
+        #winPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(248, 238, 238, 0.9);
+            padding: 50px 50px;
+            border: 5px solid #f8a3a3;
+            box-shadow: 0 0 10px rgba(232, 172, 172, 0.5);
+            z-index: 1000;
+            border-radius: 10px;
+            /* 添加圆角边框 */
+            text-align: center;
+        }
+        #winPopup button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: rgba(186, 245, 238, 0.63);
+            cursor: pointer;
+            border: 3px solid #f8a3a3;
+            border-radius: 10px;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <img src="img/right.png" id="mytank" />
+    <div id="b1" class="obstacle b1" style="top: 100px; left: 60px;"></div>
+    <div id="b11" class="obstacle b11" style="top: 400px; left: 60px;"></div>
+    <div id="b2" class="obstacle b2" style="top: 100px; left: 300px;"></div>
+    <div id="b3" class="obstacle b3" style="top: 400px; left: 300px;"></div>
+    <div id="b4" class="obstacle b4" style="top: 100px; left: 900px;"></div>
+    <div id="b5" class="obstacle b5" style="top: 100px; left: 1100px;"></div>
+    <div id="b6" class="obstacle b6" style="top: 350px; left: 1280px;"></div>
+    <div id="b7" class="obstacle b7" style="top: 600px; left: 300px;"></div>
+    <div id="b8" class="obstacle b8" style="top: 225px; left: 550px;"></div>
+    <div id="b9" class="obstacle b9" style="top: 100px; left: 550px;"></div>
+    <div id="b91" class="obstacle b91" style="top: 100px; left: 674px;"></div>
+    <div id="g2_1" class="g2" style="top: 150px; left: 600px;"></div>
+    <div id="g2_2" class="g2" style="top: 520px; left: 180px;"></div>
+    <div id="g2_3" class="g2" style="top: 300px; left: 600px;"></div>
+    <div id="g2_4" class="g2" style="top: 410px; left: 1100px;"></div>
+    <div id="g2_5" class="g2" style="top: 250px; left: 1300px;"></div>
+    <div id="play" class="play" style="top: 130px; left: 1135px;"></div>
+    <!-- 弹窗 -->
+    <div id="popup">
+        <p style="font-family: KaiTi, serif; font-weight: bold; color: rgb(245, 157, 172);font-size: 20px;">
+            消除完所有南瓜怪兽就胜利啦！</p>
+        <button id="startButton"
+            style="font-family: KaiTi, serif; font-weight: bold; color: rgb(245, 157, 172);">OK</button>
+    </div>
+    <!-- 胜利弹窗 -->
+    <div id="winPopup">
+        <p style="font-family: KaiTi, serif; font-weight: bold; color: rgb(245, 157, 172);font-size: 20px;">恭喜你游戏胜利！</p>
+        <button id="endButton"
+            style="font-family: KaiTi, serif; font-weight: bold; color: rgb(245, 157, 172);">结束</button>
+        <button id="continueButton"
+            style="font-family: KaiTi, serif; font-weight: bold; color: rgb(245, 157, 172);">继续</button>
+    </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var tank = document.getElementById('mytank');
+                var obstacles = document.querySelectorAll('.obstacle');
+                var g2Targets = document.querySelectorAll('.g2');
+                var position = { top: 0, left: 0 };
+                var step = 10; // 每次移动的步长
+                var rotation = 0; // 当前旋转角度
+
+                // 初始化每个 g2 目标的击中次数
+                var hitCounts = {};
+                g2Targets.forEach(function (target) {
+                    hitCounts[target.id] = 0;
+                });
+
+                // 记录被击中的南瓜怪兽数量
+                var pumpkinCount = 0;
+                var totalPumpkins = g2Targets.length;
+
+                // 显示弹窗
+                var popup = document.getElementById('popup');
+                popup.style.display = 'block';
+
+                // 处理“OK”按钮点击事件
+                document.getElementById('startButton').addEventListener('click', function () {
+                    popup.style.display = 'none';
+                    // 开始游戏逻辑可以在这里添加
+                });
+
+                document.addEventListener('keydown', function (event) {
+                    var newTop = position.top;
+                    var newLeft = position.left;
+
+                    switch (event.key) {
+                        case 'w': // 向上移动并旋转到270度
+                            rotation = 270; // 向上
+                            newTop -= step;
+                            break;
+                        case 's': // 向下移动并旋转到90度
+                            rotation = 90; // 向下
+                            newTop += step;
+                            break;
+                        case 'a': // 向左移动并旋转到180度
+                            rotation = 180; // 向左
+                            newLeft -= step;
+                            break;
+                        case 'd': // 向右移动并旋转到0度
+                            rotation = 0; // 向右
+                            newLeft += step;
+                            break;
+                        case 'j': // 放炮
+                            shootBullet();
+                            break;
+                    }
+
+                    // 检测碰撞
+                    if (!checkCollision(newTop, newLeft)) {
+                        // 边界检查
+                        if (newTop >= 0 && newTop <= window.innerHeight - tank.offsetHeight) {
+                            position.top = newTop;
+                        }
+                        if (newLeft >= 0 && newLeft <= window.innerWidth - tank.offsetWidth) {
+                            position.left = newLeft;
+                        }
+
+                        updateTankPosition();
+                        updateTankRotation();
+                    }
+                });
+
+                function updateTankPosition() {
+                    tank.style.top = position.top + 'px';
+                    tank.style.left = position.left + 'px';
+                }
+
+                function updateTankRotation() {
+                    tank.style.transform = 'rotate(' + rotation + 'deg)';
+                }
+
+                function shootBullet() {
+                    // 创建一个新的 div 元素作为子弹
+                    var bullet = document.createElement('div');
+                    // 为子弹添加样式类 'bullet'，定义在 CSS 中
+                    bullet.classList.add('bullet');
+                    // 将子弹添加到页面的 body 中
+                    document.body.appendChild(bullet);
+
+                    // 初始化子弹的位置，与坦克当前位置一致
+                    var bulletPosition = { top: position.top, left: position.left };
+                    var bulletStep = 30; // 定义子弹每次移动的步长
+
+                    // 计算坦克的中心位置
+                    var tankCenterX = position.left + tank.offsetWidth / 2;
+                    var tankCenterY = position.top + tank.offsetHeight / 2;
+
+                    // 根据坦克的旋转方向设置子弹的初始位置和旋转角度
+                    switch (rotation) {
+                        case 0: // 坦克向右
+                            bulletPosition.left = tankCenterX + 22; // 子弹从坦克右侧发射，水平偏移 10px
+                            bulletPosition.top = tankCenterY - 6; // 垂直居中，调整偏移量
+                            bullet.style.transform = 'rotate(0deg)';
+                            break;
+                        case 90: // 坦克向下
+                            bulletPosition.left = tankCenterX - 10; // 水平居中
+                            bulletPosition.top = tankCenterY + 22; // 子弹从坦克下侧发射，垂直偏移 10px
+                            bullet.style.transform = 'rotate(90deg)';
+                            break;
+                        case 180: // 坦克向左
+                            bulletPosition.left = tankCenterX - 25; // 子弹从坦克左侧发射，水平偏移 -10px
+                            bulletPosition.top = tankCenterY - 6; // 垂直居中
+                            bullet.style.transform = 'rotate(180deg)';
+                            break;
+                        case 270: // 坦克向上
+                            bulletPosition.left = tankCenterX - 10; // 水平居中
+                            bulletPosition.top = tankCenterY - 23; // 子弹从坦克上侧发射，垂直偏移 -10px
+                            bullet.style.transform = 'rotate(270deg)';
+                            break;
+                    }
+
+                    // 设置子弹的初始位置样式
+                    bullet.style.top = bulletPosition.top + 'px';
+                    bullet.style.left = bulletPosition.left + 'px';
+
+                    // 使用 setInterval 定时器让子弹移动
+                    var bulletInterval = setInterval(function () {
+                        // 根据坦克的旋转方向更新子弹的位置
+                        switch (rotation) {
+                            case 0: // 向右
+                                bulletPosition.left += bulletStep; // 水平向右移动
+                                break;
+                            case 90: // 向下
+                                bulletPosition.top += bulletStep; // 垂直向下移动
+                                break;
+                            case 180: // 向左
+                                bulletPosition.left -= bulletStep; // 水平向左移动
+                                break;
+                            case 270: // 向上
+                                bulletPosition.top -= bulletStep; // 垂直向上移动
+                                break;
+                        }
+
+                        // 更新子弹的样式位置
+                        bullet.style.top = bulletPosition.top + 'px';
+                        bullet.style.left = bulletPosition.left + 'px';
+
+                        // 检测子弹是否击中 g2 目标
+                        checkBulletHit(bullet, bulletPosition, bulletInterval);
+
+                        // 如果子弹超出屏幕范围，则清除定时器并移除子弹
+                        if (
+                            bulletPosition.top < -20 || // 子弹顶部超出屏幕上方
+                            bulletPosition.top > window.innerHeight + 20 || // 子弹底部超出屏幕下方
+                            bulletPosition.left < -20 || // 子弹左侧超出屏幕左边
+                            bulletPosition.left > window.innerWidth + 20 // 子弹右侧超出屏幕右边
+                        ) {
+                            clearInterval(bulletInterval); // 清除定时器
+                            document.body.removeChild(bullet); // 移除子弹元素
+                        }
+                    }, 50); // 每 50 毫秒执行一次子弹移动逻辑
+                }
+
+                function checkCollision(newTop, newLeft) {
+                    var tankRect = {
+                        top: newTop,
+                        left: newLeft,
+                        right: newLeft + tank.offsetWidth,
+                        bottom: newTop + tank.offsetHeight
+                    };
+
+                    for (var i = 0; i < obstacles.length; i++) {
+                        var obstacle = obstacles[i];
+                        var obstacleRect = {
+                            top: parseInt(obstacle.style.top, 10),
+                            left: parseInt(obstacle.style.left, 10),
+                            right: parseInt(obstacle.style.left, 10) + obstacle.offsetWidth,
+                            bottom: parseInt(obstacle.style.top, 10) + obstacle.offsetHeight
+                        };
+
+                        // 检测矩形是否重叠
+                        if (!(
+                            tankRect.bottom < obstacleRect.top ||
+                            tankRect.top > obstacleRect.bottom ||
+                            tankRect.right < obstacleRect.left ||
+                            tankRect.left > obstacleRect.right
+                        )) {
+                            return true; // 发生碰撞
+                        }
+                    }
+
+                    return false; // 没有碰撞
+                }
+
+                function checkBulletHit(bullet, bulletPosition, bulletInterval) {
+                    var bulletRect = {
+                        top: bulletPosition.top,
+                        left: bulletPosition.left,
+                        right: bulletPosition.left + bullet.offsetWidth,
+                        bottom: bulletPosition.top + bullet.offsetHeight
+                    };
+
+                    g2Targets.forEach(function (target) {
+                        var targetRect = {
+                            top: parseInt(target.style.top, 10),
+                            left: parseInt(target.style.left, 10),
+                            right: parseInt(target.style.left, 10) + target.offsetWidth,
+                            bottom: parseInt(target.style.top, 10) + target.offsetHeight
+                        };
+
+                        // 检测矩形是否重叠
+                        if (!(
+                            bulletRect.bottom < targetRect.top ||
+                            bulletRect.top > targetRect.bottom ||
+                            bulletRect.right < targetRect.left ||
+                            bulletRect.left > targetRect.right
+                        )) {
+                            // 击中目标
+                            hitCounts[target.id]++;
+                            if (hitCounts[target.id] >= 3) {
+                                // 移除目标
+                                document.body.removeChild(target);
+                                // 移除子弹
+                                clearInterval(bulletInterval);
+                                document.body.removeChild(bullet);
+                                // 增加被击中的南瓜怪兽数量
+                                pumpkinCount++;
+                                // 检查是否达到五个
+                                if (pumpkinCount >= 5) {
+                                    // 显示胜利弹窗
+                                    var winPopup = document.getElementById('winPopup');
+                                    winPopup.style.display = 'block';
+                                }
+                            } else {
+                                // 移除子弹
+                                clearInterval(bulletInterval);
+                                document.body.removeChild(bullet);
+                            }
+                        }
+                    });
+                }
+            });
+            //禁用鼠标右键并给出弹窗提出禁止
+            document.addEventListener('contextmenu', function (event) {
+                event.preventDefault(); // 阻止默认右键菜单显示
+                alert('禁止右键！'); // 弹出提示
+            });
+        </script>
+</body>
+
+</html>
